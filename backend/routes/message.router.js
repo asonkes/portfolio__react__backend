@@ -5,19 +5,27 @@
 const express = require("express");
 const messageRouter = express.Router();
 
-// stockage temporaire
-const messages = [];
+const transporter = require("../nodemailer");
 
-// POST → ajouter un message
-messageRouter.post("/", (req, res) => {
-  const message = { _id: Date.now(), ...req.body }; // récupère les données envoyées
-  messages.push(message);
-  res.status(201).json(message); // renvoie le message ajouté
-});
+messageRouter.post("/", async (req, res) => {
+  const { firstname, lastname, email, message } = req.body;
 
-// GET → récupérer tous les messages
-messageRouter.get("/", (req, res) => {
-  res.status(200).json(messages);
+  try {
+    await transporter.sendMail({
+      from: email,
+      to: process.env.EMAIL_USER,
+      subject: `Message portfolio de ${lastname} ${firstname}`,
+      text: message,
+    });
+
+    res.status(200).json({ message: "Email envoyé" });
+  } catch (error) {
+    console.error(error);
+
+    res.status(500).json({
+      message: "Erreur lors de l'envoi",
+    });
+  }
 });
 
 module.exports = messageRouter;
