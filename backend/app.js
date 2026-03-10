@@ -6,9 +6,9 @@ const server = express();
 
 const { PORT } = process.env;
 
-// Sert à permettre à mon frontend à faire des requêtes sur le backend
+// Sert à permettre à mon frontend à faire des requêtes ur le backend
 const cors = require("cors");
-server.use(cors());
+server.use(cors({ origin: "http://localhost:5173" }));
 
 // Permet avec ce code d'envoyer du json(pour les requêtes 'post' par exemple)
 server.use(express.json());
