@@ -36,3 +36,6 @@ if (process.env.NODE_ENV !== "production") {
     console.log(`🚀 Express Server started on port ${PORT}`);
   });
 }
+
+// pour production(vercel)
+module.exports = server;
