@@ -28,8 +28,4 @@ messageRouter.post("/", async (req, res) => {
   }
 });
 
-messageRouter.get("/test", (req, res) => {
-  res.status(200).json({ message: "Le router /messages fonctionne !" });
-});
-
 module.exports = messageRouter;
