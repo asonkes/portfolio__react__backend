@@ -1,29 +1,27 @@
-// import d'express
+//import d'express
 const express = require("express");
-const cors = require("cors"); // ← il faut cette ligne
 
-// création du serveur express
+//création du serveur express
 const server = express();
 
-// configuration CORS
-server.use(
-  cors({
-    origin: "*",
-    methods: ["GET", "POST", "OPTIONS"],
-    allowedHeaders: ["Content-Type"],
-  }),
-);
+// const { PORT } = process.env;
 
-// très important pour le preflight
-server.options("*", cors());
+// Sert à permettre à mon frontend à faire des requêtes ur le backend
+const cors = require("cors");
+server.use(cors());
 
-// JSON body parser
+// Permet avec ce code d'envoyer du json(pour les requêtes 'post' par exemple)
 server.use(express.json());
 
-// import du router
+// On importe le router
 const router = require("./routes");
 
-// route API
+// Déclarer qu'on utilise ce router sur le serveur
 server.use("/api", router);
+
+// // Écouter le serveur sur un port spécifique
+// server.listen(PORT, () => {
+//   console.log(`🚀 Express Server started on port ${PORT}`);
+// });
 
 module.exports = server;
